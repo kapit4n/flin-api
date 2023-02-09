@@ -1,5 +1,8 @@
-from app import db
+import sys
+sys.path.append("..")
+from flask_sqlalchemy import SQLAlchemy
 
+db = SQLAlchemy()
 class User(db.Model):
   __tablename__ = 'users'
 
@@ -14,3 +17,9 @@ class User(db.Model):
     def __repr__(self):
       return self.name
 
+  def serialize(self):
+    return {
+      'name': self.name,
+      'email': self.email,
+      'id': self.id
+    }

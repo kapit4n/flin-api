@@ -1,18 +1,21 @@
 import sys
-sys.path.append("..")
+# sys.path.append("..")
 
 from app.models.user import User
 
-from flask_restful import Resource
-from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify
+from flask_restful import Resource, reqparse
 
-db = SQLAlchemy()
+user_parser = reqparse.RequestParser()
+user_parser.add_argument('name')
+user_parser.add_argument('email')
+
 
 class UsersAPI(Resource):
 
   def post(self):
-    user = User('Luis Arce2', 'luis.222@gmail.com')
+    parsed_user = user_parser.parse_args()
+    user = User(parsed_user["name"], parsed_user["email"])
     db.session.add(user)
     db.session.commit()
 

@@ -1,8 +1,8 @@
 import sys
 sys.path.append("..")
-from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
+from app.db import db
+
 class User(db.Model):
   __tablename__ = 'users'
 

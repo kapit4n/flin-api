@@ -12,17 +12,20 @@ db = SQLAlchemy()
 class UsersAPI(Resource):
 
   def post(self):
-    u = User('Luis Arce2', 'luis.222@gmail.com')
-    db.session.add(u)
+    user = User('Luis Arce2', 'luis.222@gmail.com')
+    db.session.add(user)
     db.session.commit()
-
 
   def get(self, id=None):
     if not id:
       users = User.query.all()
       return jsonify([u.serialize() for u in users])
 
-    return User('Luis Arce', 'get@gmail.com')
+    user = User.query.get(id)
+    if user:
+      return jsonify(user.serialize())
+    
+    return {"error": "No found user"}
 
   def put(self, id):
     pass
